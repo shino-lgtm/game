@@ -1,25 +1,74 @@
-import random
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>数当てゲーム</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", sans-serif;
+      background-color: #f0f8ff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <h1>数当てゲーム</h1>
+  <p>1から100の間の数字を当ててください。</p>
+  <input type="number" id="guessInput" placeholder="数字を入力" />
+  <button onclick="checkGuess()">送信</button>
+  <div id="result"></div>
 
-def guess_the_number():
-    number_to_guess = random.randint(1, 100)
-    number_of_attempts = 0
-    max_attempts = 10
+  <script>
+    let numberToGuess = Math.floor(Math.random() * 100) + 1;
+    let attempts = 0;
+    const maxAttempts = 10;
 
-    print("数当てゲームへようこそ！1から100の間の数を当ててください。")
+    function checkGuess() {
+      const input = document.getElementById("guessInput");
+      const result = document.getElementById("result");
+      const guess = parseInt(input.value, 10);
+      attempts++;
 
-    while number_of_attempts < max_attempts:
-        guess = int(input("あなたの推測は？: "))
-        number_of_attempts += 1
+      if (isNaN(guess)) {
+        result.textContent = "数字を入力してください。";
+        return;
+      }
 
-        if guess < number_to_guess:
-            print("もっと大きい数字です。")
-        elif guess > number_to_guess:
-            print("もっと小さい数字です。")
-        else:
-            print(f"正解です！{number_of_attempts} 回で当たりました！")
-            return
+      if (guess < numberToGuess) {
+        result.textContent = "もっと大きい数字です。";
+      } else if (guess > numberToGuess) {
+        result.textContent = "もっと小さい数字です。";
+      } else {
+        result.textContent = `🎉 正解です！${attempts}回で当たりました！`;
+        input.disabled = true;
+        return;
+      }
 
-    print(f"残念！正解は {number_to_guess} でした。")
-
-# ゲームを開始
-guess_the_number()
+      if (attempts >= maxAttempts) {
+        result.textContent = `😢 残念！正解は ${numberToGuess} でした。`;
+        input.disabled = true;
+      }
+    }
+  </script>
+</body>
+</html>
