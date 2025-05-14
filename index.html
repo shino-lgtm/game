@@ -1,11 +1,25 @@
+import random
+
 def guess_the_number():
-number_to_guess = random.randint(1, 100)
-number_of_attempts = 0
-max_attempts = 10
-print("数当てゲームへようこそ！1から100の間の数を当ててください。")
-while number_of_attempts < max_attempts:
-guess = int(input("あなたの推測は？: "))
-number_of_attempts += 1
-if guess < number_to_guess:
-print("もっと大きい数字です。")
-elif guess > number_to_guess:
+    number_to_guess = random.randint(1, 100)
+    number_of_attempts = 0
+    max_attempts = 10
+
+    print("数当てゲームへようこそ！1から100の間の数を当ててください。")
+
+    while number_of_attempts < max_attempts:
+        guess = int(input("あなたの推測は？: "))
+        number_of_attempts += 1
+
+        if guess < number_to_guess:
+            print("もっと大きい数字です。")
+        elif guess > number_to_guess:
+            print("もっと小さい数字です。")
+        else:
+            print(f"正解です！{number_of_attempts} 回で当たりました！")
+            return
+
+    print(f"残念！正解は {number_to_guess} でした。")
+
+# ゲームを実行
+guess_the_number()
